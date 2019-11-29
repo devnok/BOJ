@@ -40,9 +40,11 @@ Dir.each_child(boj_path) do |f|
     else
       folder = "others"
     end
-    puts Dir.exist?(folder)
     Dir.mkdir(folder) unless Dir.exist?(folder)
-    `cp #{boj_path}/#{f} #{folder}/#{f}` unless File.exist?("#{folder}/#{f}")
+    unless File.exist?("#{folder}/#{f}")
+      puts "#{f} generated"
+      `cp #{boj_path}/#{f} #{folder}/#{f}`
+    end
   end
 end
 
