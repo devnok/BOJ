@@ -20,7 +20,7 @@ config = {
   email: `git config user.email`.presence || "ha819ha.dev@gmail.com",
   name: `git config user.name`.presence || "devnok",
   github: "https://github.com/devnok/BOJ.git",
-  commit_msg: Time.now.strftime("%Y년%m월%d일"),
+  commit_msg: Time.now.strftime("%Y년 %m월 %d일"),
   boj_path: "~/documents/dev/c++"
 }
 if Dir.exist?('.git')
