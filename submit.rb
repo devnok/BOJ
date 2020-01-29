@@ -57,5 +57,3 @@ print "commit message : "
 commit_msg = scan.call || config[:commit_msg]
 puts commit_msg
 `git add .`
-`git commit -m "#{commit_msg}"`
-`git push -u origin master`
