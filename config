@@ -1,0 +1,8 @@
+cat > .replit << EOF
+run="""
+clear
+g++ -o $1 $1.cpp && \
+.$1
+rm $1
+"""
+EOF
