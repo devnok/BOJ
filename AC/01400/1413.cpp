@@ -54,8 +54,28 @@ template<typename... Args>
 void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
+int N,M;
+ll dp[21][21];
+ll solve(ll n,ll m){
+  if(n==0) return 1;
+  if(m==0) return 0;
+  ll& ret = dp[n][m];
+  if(~ret) return ret;
+  ret = 0;
+  ll t=1;
+  for(int i=1;i<=n;i++){
+    ret += t * solve(n-i, m-1);
+    t*=(n-i);
+  }
+  return ret;
+}
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  cin>>N>>M;
+  memset(dp,-1,sizeof(dp));
+  ll a=solve(N,M);
+  ll b=solve(N,N);
+  ll g = gcd(a,b);
+  cout<<a/g<<'/'<<b/g;
 }

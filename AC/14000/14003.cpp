@@ -19,7 +19,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
+#include <complex>
 using namespace std;
+
+using base = complex<double>;
 
 using ll = long long;
 using ld = long double;
@@ -35,10 +38,12 @@ using vpii = vector<pii>;
 using vpil = vector<pil>;
 using vpli = vector<pli>;
 using vpll = vector<pll>;
+using vb = vector<base>;
 
 #define x first
 #define y second
 #define all(v) (v).begin(), (v).end()
+#define sz(v) ((int)(v).size())
 #define cpr(v) sort(all(v)); (v).erase(unique(all(v)), (v).end())
 #define idx(v, x) int(lower_bound(all(v), (x)) - (v).begin())
 #define ints(args...) int args; readln(args);
@@ -50,59 +55,32 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
-using ti = tuple<int,int,int>;
-const int MAXN = 200020
-vector<int> adj[MAXN];
-int sz[MAXN],v[MAXN];
-
-
-int get_sz(int x,int p){
-  sz[x]=1;
-  for(int& i:adj[x]) if(i^p) sz+=get_sz(i,x);
-  return sz[x];
-}
-int cent(int x,int p,int s){
-  for(int i:adj[x]) if(i^p && !v[i] && sz[i]*2>s) return cent(i,x,s);
-  return x;
-}
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
   ints(n);
-  strs(s);
+  vint v(n);
+  for(int& i:v) cin>>i;
+  if(n==1){
+    cout<<1<<'\n'<<v[0];
+    return 0;
+  }
+  vint ans = {v[0]};
+  int a=0;
+  vint lis(n, 0);
   for(int i=1;i<n;i++){
-    ints(u,v);
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+    auto it = lower_bound(all(ans), v[i]);
+    lis[i] = it - ans.begin();
+    if(it!=ans.end()) *it = v[i];
+    else ans.push_back(v[i]);
+    a = max(a, sz(ans));
   }
-  auto add = [](ti ucp,char c) -> ti {
-    auto [u,c,p] = ucp;
-    if(c=='u') return make_tuple(u+1,c,p);
-    return c=='c' ? make_tuple(u,c+1,p) : make_tuple(u,c,p+1);
-  }
-  function<int(int)> solve = [&](int x){
-    int c = cent(x,0,get_sz(x,0));
-    int ans = 0;
-    v[c] = 1
-    map<ti, int> m;
-    ti t = {0,0,0};
-    t = add(t, s[c]);
-    for(int i:adj[c]){
-      dfs(i, c, add(t, s[i]), 1);
-      dfs(i, c, add(t, s[i]), 2);
+  cout<<a<<'\n';
+  vint b;
+  for(int i=n;i--;){
+    if(lis[i] == a-1){
+      b.push_back(v[i]);
+      a--;
     }
-    function<int(int)> dfs = [&](int x,int par,ti ucp, int type){
-      for(int& i:adj[x]){
-        if(i==p || v[i]) continue;
-        ti t = add(ucp, s[i]);
-        auto [u,c,p] = t;
-        auto it = m.find({u-p, u+p-c});
-        if(it==m.end()) m.insert({ti, 0});
-        if(type==1) ans += it->second;
-        else (it->second)++;
-      }
-    };
-    for(int i:adj[x]) if(!v[i]) ans += solve(x);
-    return ans;
-  };
-  cout<<solve(1);
+  }
+  for(auto it=b.rbegin();it!=b.rend();++it) cout<<*it<<' ';
 }

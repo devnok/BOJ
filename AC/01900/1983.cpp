@@ -55,7 +55,42 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+const int MAXN = 404;
+int dp[MAXN][MAXN][MAXN];
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n);
+  vint a,b;
+  for(int i=0;i<n;i++){
+    ints(c);
+    if(c) a.push_back(c);
+  }
+  for(int i=0;i<n;i++){
+    ints(c);
+    if(c) b.push_back(c);
+  }
+  const int INF = 987654321;
+  int an = sz(a), bn = sz(b);
+  for(int i=0;i<=n;i++)
+    for(int j=0;j<=an;j++)
+      for(int k=0;k<=bn;k++)
+        dp[i][j][k] = -INF;
+  for(int i=0;i<=n;i++){
+    for(int j=0;j<=min(i,an);j++) dp[i][j][0] = 0;
+    for(int k=0;k<=min(i,bn);k++) dp[i][0][k] = 0;
+  }
+  auto max3 = [](int a,int b,int c){return max(max(a,b),c);};
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=min(i,an);j++){
+      for(int k=1;k<=min(i,bn);k++){
+        dp[i][j][k] =
+          max3(
+            dp[i-1][j][k-1],
+            dp[i-1][j-1][k],
+            dp[i-1][j-1][k-1] + a[j-1]*b[k-1]
+          );
+      }
+    }
+  }
+  cout<<dp[n][an][bn];
 }

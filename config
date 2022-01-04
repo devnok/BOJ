@@ -1,8 +1,10 @@
 cat > .replit << EOF
 run="""
 clear
-g++ $1.cpp -o $1 -O2 -Wall -lm -static -std=gnu++17 && \
-./$1
-rm $1
+echo "\\\\033[0;33m\\\\033[0m clang++-7 -O2 -std=c++17 $1.cpp -o main" && \
+clang++-7 -O2 -std=c++17 $1.cpp -o main && \
+echo "\\\\033[0;33m\\\\033[0m ./main"
+./main
+rm main
 """
 EOF

@@ -19,10 +19,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
-#include <complex>
 using namespace std;
-
-using base = complex<double>;
 
 using ll = long long;
 using ld = long double;
@@ -38,7 +35,6 @@ using vpii = vector<pii>;
 using vpil = vector<pil>;
 using vpli = vector<pli>;
 using vpll = vector<pll>;
-using vb = vector<base>;
 
 #define x first
 #define y second
@@ -55,7 +51,44 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+vpii adj[2020];
+
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(t);
+  while(t--){
+    ints(n,m,t);
+    ints(s,g,h);
+    for(int i=1;i<=n;i++) adj[i].clear();
+    while(m--){
+      ints(a,b,d);
+      d*=2;
+      if((a==g && b==h) || (a==h && b==g)) d-=1;
+      adj[a].push_back({b,d});
+      adj[b].push_back({a,d});
+    }
+    const int INF = 987654321;
+    vint v(n+1, 0), d(n+1, INF), ans;
+    while(t--){
+      ints(x);
+      v[x]=1;
+    }
+    priority_queue<tuple<int,int>> pq;
+    pq.push({0, s});
+    while(!pq.empty()){
+      auto [w,x] = pq.top(); w=-w;
+      pq.pop();
+      if(w > d[x]) continue;
+      if(v[x] && d[x]%2) ans.push_back(x);
+      for(auto [i,j]: adj[x]){
+        if(d[i] > w+j){
+          d[i] = w+j;
+          pq.push({-d[i], i});
+        }
+      }
+    }
+    sort(all(ans));
+    for(int i:ans) cout<<i<<' ';
+    cout<<'\n';
+  }
 }

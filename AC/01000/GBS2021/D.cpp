@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iostream>
 #include <limits>
 #include <iomanip>
 #include <vector>
@@ -55,7 +56,23 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+int dp[101][100010];
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n,m);
+  vint s(n+1),p(n+1);
+  auto max3 = [](int a,int b,int c){return max(a,max(b,c));};
+  for(int i=1;i<=n;i++) cin>>s[i]>>p[i];
+  const int INF = 987654321;
+  for(int i=1;i<=n;i++){
+    for(int j=0;j<=m;j++){
+      dp[i][j] = max3(
+        j+p[i]>m ? -INF : dp[i-1][j+p[i]],
+        j+p[i]+1>m ? -INF : dp[i-1][j+p[i]+1]+s[i],
+        dp[i-1][j]-s[i]);
+    }
+  }
+  if(dp[n][0] == 0) cout<<"D";
+  if(dp[n][0] > 0) cout<<"W";
+  if(dp[n][0] < 0) cout<<"L";
 }

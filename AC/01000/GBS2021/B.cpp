@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iostream>
 #include <limits>
 #include <iomanip>
 #include <vector>
@@ -57,5 +58,21 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  strs(s);
+  int n = sz(s);
+  string ans = "ALPSOO";
+  for(int i=1;i<n;i++){
+    if(s[i-1]==s[i]){
+      ans = "NON ALPSOO";
+      break;
+    }
+    if(i==1) continue;
+    int a=s[i-2]-s[i-1],b=s[i-1]-s[i];
+    if(a*b > 0){
+      if(a!=b) ans = "NON ALPSOO";
+    } 
+  }
+  if(s[1]-s[0] > 0 && s[n-1]-s[n-2] < 0)
+    cout<<ans;
+  else cout << "NON ALPSOO";
 }

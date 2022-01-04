@@ -54,8 +54,29 @@ template<typename... Args>
 void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
-
+int dp[101][10][10][10][2];
+int n,a[110], b[110];
+int mod(int x){
+  return (x+10)%10;
+}
+int solve(int p,int x,int y,int z,int w){
+  if(p==n) return 0;
+  int& ret = dp[p][x][y][z][w];
+  if(~ret) return ret;
+  if(x==b[p]) return ret=min(solve(p+1,y,z,a[p+3],w),solve(p+1,y,z,a[p+3],!w));
+  ret=1e9;
+  for(int k=1;k<=3;k++){
+    int d = w?k:-k;
+    ret = min(ret, solve(p,mod(x+d),y,z,w)+1);
+    ret = min(ret, solve(p,mod(x+d),mod(y+d),z,w)+1);
+    ret = min(ret, solve(p,mod(x+d),mod(y+d),mod(z+d),w)+1);
+  }
+  return ret;
+}
 int main(void){
-  cin.tie(0)->sync_with_stdio(0);
-  
+  cin>>n;
+  for(int i=0;i<n;i++) scanf("%1d",&a[i]);
+  for(int i=0;i<n;i++) scanf("%1d",&b[i]);
+  memset(dp,-1,sizeof(dp));
+  cout<<min(solve(0,a[0],a[1],a[2],0), solve(0,a[0],a[1],a[2],1));
 }

@@ -55,7 +55,18 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+int n, dp[1010];
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  cin>>n;
+  vint v(n+1);
+  for(int i=1;i<=n;i++) cin>>v[i];
+  for(int i=1;i<=n;i++){
+    set<int> s;
+    for(int j=i;j>0;j--){
+      s.insert(v[j]);
+      dp[i] = max(dp[i], dp[j-1] + (*--s.end() - *s.begin()));
+    }
+  }
+  cout<<dp[n];
 }

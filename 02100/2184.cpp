@@ -55,7 +55,31 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+int dp[1010][1010][2];
+
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n,l);
+  vint v(n);
+  for(int& i:v) cin>>i;
+  sort(all(v));
+  memset(dp,-1,sizeof(dp));
+  auto dis = [&](int i,int j){ return abs(v[i]-v[j]); };
+  function<int(int,int,int)> solve = [&](int l,int r,int h){
+    int& ret = dp[l][r][h];
+    if(~ret) return ret;
+    if(l==r) return ret = abs(l-v[l]);
+    int len = (r-l+1);
+    if(!h){
+      return ret = min(
+        solve(l+1, r, 0) + dis(l, l+1),
+        solve(l+1, r, 1) + dis(l, r)
+      );
+    }
+    return ret = min(
+      solve(l, r-1, 0) + dis(l, r),
+      solve(l, r-1, 1) + dis(r-1, r)
+    );
+  };
+  cout << min(solve(0, n-1, 0),solve(0, n-1, 1));
 }

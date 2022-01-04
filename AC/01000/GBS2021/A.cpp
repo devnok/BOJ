@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iostream>
 #include <limits>
 #include <iomanip>
 #include <vector>
@@ -57,5 +58,10 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n,m);
+  ints(a,b,c,d);
+  if(n==1 || m==1){
+    cout<<(make_pair(a,b) == make_pair(c,d) ? "YES" : "NO");
+  }
+  else cout<<(((a+b)^(c+d)) & 1 ? "NO" : "YES");
 }

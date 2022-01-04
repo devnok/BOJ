@@ -55,7 +55,33 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+map<vint, double> dp;
+int n;
+
+double solve(vint a){
+  auto it = dp.find(a);
+  if(it != dp.end()) return it->second;
+  dp.insert({a, 0});
+  it = dp.find(a);
+  double& ret = it->second;
+  int cnt=0;
+  for(int i=0;i<n;i++){
+    for(int j=i+1;j<n;j++){
+      if(a[i] <= a[j]) continue;
+      cnt++;
+      swap(a[i], a[j]);
+      ret += solve(a) + 1;
+      swap(a[i], a[j]);
+    }
+  }
+  return ret /= cnt;
+}
 int main(void){
-  cin.tie(0)->sync_with_stdio(0);
-  
+  cin>>n;
+  vint a(n);
+  for(int& i:a) cin>>i;
+  vint b(a);
+  sort(all(b));
+  dp.insert({b, 0});
+  printf("%.7lf", solve(a));
 }

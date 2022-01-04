@@ -19,10 +19,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
-#include <complex>
 using namespace std;
-
-using base = complex<double>;
 
 using ll = long long;
 using ld = long double;
@@ -38,7 +35,6 @@ using vpii = vector<pii>;
 using vpil = vector<pil>;
 using vpli = vector<pli>;
 using vpll = vector<pll>;
-using vb = vector<base>;
 
 #define x first
 #define y second
@@ -55,7 +51,37 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+vint adj[202];
+int nf(int n, int m){
+  int r=0;
+  vint v(m+1), par(m+1, -1);
+  function<int(int)> dfs = [&](int x){
+    for(int i:adj[x]){
+      if(v[i]) continue;
+      v[i] = 1;
+      if(par[i]<0 || dfs(par[i])){
+        par[i] = x;
+        v[i] = 1;
+        return 1;
+      }
+    }
+    return 0;
+  };
+  for(int i=1;i<=n;i++){
+    fill(all(v), 0);
+    r += dfs(i);
+  }
+  return r;
+}
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n,m);
+  for(int i=1;i<=n;i++){
+    ints(j);
+    while(j--){
+      ints(s);
+      adj[i].push_back(s);
+    }
+  }
+  cout<<nf(n, m);
 }

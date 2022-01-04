@@ -1,6 +1,6 @@
-language="cpp"
 run="""
 clear
-g++ 22300/22360.cpp -o 22300/22360 -O2 -Wall -lm -static -std=gnu++17 && ./22300/22360
-rm 22300/22360
+echo "\\033[0;33m\\033[0m clang++-7 -O2 -std=c++17 01900/1947.cpp -o main" && clang++-7 -O2 -std=c++17 01900/1947.cpp -o main && echo "\\033[0;33m\\033[0m ./main"
+./main
+rm main
 """

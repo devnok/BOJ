@@ -55,7 +55,27 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+int c[303][303], dp[303][303];
+
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n,m,k);
+  for(int i=0;i<k;i++){
+    ints(a,b,d);
+    if(a<b) c[a][b] = max(c[a][b], d);
+  }
+  memset(dp, -1, sizeof(dp));
+  const int INF = 987654321;
+  function<int(int, int)> dfs = [&](int x,int m){
+    if(x==n) return 0;
+    if(m==0) return -INF;
+    int& r = dp[x][m];
+    if(~r) return r;
+    r=-INF;
+    for(int i=x+1;i<=n;i++){
+      if(c[x][i]) r = max(dfs(i, m-1)+c[x][i], r);
+    }
+    return r;
+  };
+  cout<<dfs(1,m-1);
 }

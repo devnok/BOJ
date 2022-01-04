@@ -55,7 +55,15 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+int dp[11][50050];
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n);
+  ll ans=0;
+  for(int i=0;i<n;i++){
+    ints(l);
+    for(int j=50'000;j>=0;j--){
+      for(int k)
+    }
+  }
 }

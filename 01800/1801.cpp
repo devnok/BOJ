@@ -57,5 +57,11 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  ints(n);
+  vint v(n);
+  for(int &i:v) cin>>i;
+  int p = (1<<n)-1;
+  for(int i=3;i<=p;i++){
+    
+  }
 }
