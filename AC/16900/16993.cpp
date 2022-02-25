@@ -55,15 +55,57 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
-int dp[11][50050];
+struct Seg{
+  vint dat, sf, pf, mx;
+  int sz;
+  void init(int n){
+    sz=1; while(sz<n) sz*=2;
+    dat.resize(2*sz,0);
+    sf.resize(2*sz,0);
+    pf.resize(2*sz,0);
+    mx.resize(2*sz,0);
+  }
+  int max3(int a,int b,int c){return max(a,max(b,c));}
+  void update(int x,int v){
+    x+=sz;
+    dat[x] = mx[x] = pf[x] = sf[x] = v;
+    for(x/=2;x;x/=2){
+      int l=2*x,r=2*x+1;
+      dat[x] = dat[l]+dat[r];
+      mx[x] = max3(mx[l],mx[r],sf[l]+pf[r]);
+      pf[x] = max(pf[l],dat[l]+pf[r]);
+      sf[x] = max(sf[r],sf[l]+dat[r]);
+    }
+  }
+  int get(int s,int e){
+    vint a,b;
+    for(s+=sz,e+=sz;s<=e;s/=2,e/=2){
+      if(s%2) a.push_back(s++);
+      if(e%2==0) b.push_back(e--);
+    }
+    reverse(all(b));
+    for(int x:b) a.push_back(x);
+    int ret=-(1e9),t=0;
+    for(int x:a){
+      ret = max3(ret, mx[x], t+pf[x]);
+      t = max3(sf[x], t+dat[x], 0);
+      // writeln(s,e,ret,x,dat[x],mx[x],pf[x],sf[x]);
+    }
+    return ret;
+  }
+} S;
+
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
   ints(n);
-  ll ans=0;
-  for(int i=0;i<n;i++){
-    ints(l);
-    for(int j=50'000;j>=0;j--){
-      for(int k)
-    }
+  S.init(n+1);
+  for(int a,i=1;i<=n;i++){
+    cin>>a;
+    S.update(i, a);
+  }
+  ints(m);
+  while(m--){
+    ints(i,j);
+    cout<<S.get(i,j)<<'\n';
   }
 }

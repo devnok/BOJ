@@ -55,31 +55,28 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
-int dp[1010][1010][2];
-
+ll dp[50050][11],a[51];
+const int D = 50001;
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  ints(n,l);
-  vint v(n);
-  for(int& i:v) cin>>i;
-  sort(all(v));
-  memset(dp,-1,sizeof(dp));
-  auto dis = [&](int i,int j){ return abs(v[i]-v[j]); };
-  function<int(int,int,int)> solve = [&](int l,int r,int h){
-    int& ret = dp[l][r][h];
-    if(~ret) return ret;
-    if(l==r) return ret = abs(l-v[l]);
-    int len = (r-l+1);
-    if(!h){
-      return ret = min(
-        solve(l+1, r, 0) + dis(l, l+1),
-        solve(l+1, r, 1) + dis(l, r)
-      );
+  ints(n);
+  ll ans=0;
+  for(int i=1;i<=n;i++) cin>>a[i];
+  ints(K);
+  sort(a+1, a+n+1);
+  dp[0][0] = 1;
+  for(int i=1;i<=n;i++){
+    for(int j=a[i]+1;j<=D;j++) ans += dp[j][K-1];
+    for(int j=D;j>=D-a[i];j--){
+      for(int k=K;k;k--){
+        dp[D][k] += dp[j][k-1];
+      }
     }
-    return ret = min(
-      solve(l, r-1, 0) + dis(l, r),
-      solve(l, r-1, 1) + dis(r-1, r)
-    );
-  };
-  cout << min(solve(0, n-1, 0),solve(0, n-1, 1));
+    for(int j=D-1;j>=a[i];j--){
+      for(int k=K;k;k--){
+        if(j>=a[i]) dp[j][k] += dp[j-a[i]][k-1];
+      }
+    }
+  }
+  cout<<ans;
 }

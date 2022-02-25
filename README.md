@@ -1,7 +1,7 @@
 # BOJ
 ## 1. submit.rb 사용법
-<code>ruby submit.rb</code> 로 실행합니다.<br>
-###### ruby version : >2.5.1 ( <code>rvm use [ruby-version]</code> 또는 <code>rvm --default use [ruby-version]</code> ) <br>
+`ruby submit.rb` 로 실행합니다.<br>
+###### ruby version : >2.5.1 ( `rvm use [ruby-version]` 또는 `rvm --default use [ruby-version]` ) <br>
 코드의 요구사항은 다음과 같습니다.
 - github repository : github respository url
 - user.email : email of github account
@@ -13,4 +13,4 @@
 
 ## 2. etc..
 git 관련 오류가 날 때는
-<code>git pull</code> 또는 폴더에서 .git폴더를 삭제하고 repository를 재생성해주세요.
+`git pull` 또는 폴더에서 .git폴더를 삭제하고 repository를 재생성해주세요.

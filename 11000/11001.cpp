@@ -28,7 +28,28 @@ void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
+const int MAXN = 100010;
+ll v[MAXN], t[MAXN], n, d;
+ll D[MAXN], K[MAXN], ans;
+
+void solve(int s,int e,int p,int q){
+  if(s>e) return;
+  int m = (s+e)/2;
+
+  for(int k=p;k<=min(m,q);k++){
+    if(abs(k-m)>d) continue;
+    ll s=(m-k)*t[m]+v[k];
+    if(D[m]<s) D[m]=s,K[m]=k;
+  }
+  ans = max(ans, D[m]);
+  solve(s,m-1,p,K[m]);
+  solve(m+1,e,K[m],q);
+}
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  cin>>n>>d;
+  for(int i=0;i<n;i++) cin>>t[i];
+  for(int i=0;i<n;i++) cin>>v[i];
+  solve(0,n-1,0,n-1);
+  cout<<ans;
 }

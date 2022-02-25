@@ -1,28 +1,5 @@
-#include <iostream>
-#include <limits>
-#include <iomanip>
-#include <vector>
-#include <queue>
-#include <stack>
-#include <set>
-#include <map>
-#include <algorithm>
-#include <numeric>
-#include <utility>
-#include <string>
-#include <bitset>
-#include <functional>
-#include <chrono>
-#include <random>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cassert>
-#include <complex>
+#include <bits/stdc++.h>
 using namespace std;
-
-using base = complex<double>;
 
 using ll = long long;
 using ld = long double;
@@ -38,17 +15,13 @@ using vpii = vector<pii>;
 using vpil = vector<pil>;
 using vpli = vector<pli>;
 using vpll = vector<pll>;
-using vb = vector<base>;
 
 #define x first
 #define y second
 #define all(v) (v).begin(), (v).end()
 #define sz(v) ((int)(v).size())
-#define cpr(v) sort(all(v)); (v).erase(unique(all(v)), (v).end())
-#define idx(v, x) int(lower_bound(all(v), (x)) - (v).begin())
 #define ints(args...) int args; readln(args);
 #define lls(args...) ll args; readln(args);
-#define strs(args...) string args; readln(args);
 
 template<typename... Args>
 void readln(Args&... args) { ((cin >> args), ...); }
@@ -57,5 +30,35 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  lls(n);
+  vll a(n);
+  for(ll& i:a) cin>>i;
+  sort(all(a));
+  ll d=a[1]-a[0];
+  if(d<1){
+    cout<<"NO";
+    return 0;
+  }
+  multiset<ll> m1(all(a));
+  ll k;
+  for(ll i=a[1];;i+=d){
+    auto it = m1.find(i);
+    if(it == m1.end()) break;
+    m1.erase(it);
+    k=i;
+  }
+  auto m2(m1);
+  m2.insert(k);
+  auto chk = [](multiset<ll> m){
+    if(m.size()<2) return 0;
+    ll s = *m.begin();
+    ll d = *(++m.begin()) - s;
+    if(d<1) return 0;
+    for(auto it=m.begin();it!=m.end();++it){
+      if(s!=*it) return 0;
+      s+=d;
+    }
+    return 1;
+  };
+  cout<<(chk(m1)||chk(m2) ? "YES" : "NO");
 }
