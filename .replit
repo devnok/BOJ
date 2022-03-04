@@ -1,6 +1,6 @@
 run="""
 clear
-echo "\\033[0;33m\\033[0m clang++-7 -O2 -std=c++17 23900/23975.cpp -o main" && clang++-7 -O2 -std=c++17 23900/23975.cpp -o main && echo "\\033[0;33m\\033[0m ./main"
+echo "\\033[0;33m\\033[0m clang++-7 -O2 -std=c++17 others/hi.cpp -o main" && clang++-7 -O2 -std=c++17 others/hi.cpp -o main && echo "\\033[0;33m\\033[0m ./main"
 ./main
 rm main
 """
