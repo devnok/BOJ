@@ -1,6 +1,8 @@
 {
   "files.associations": {
     "*.js": "javascript",
-    "map": "cpp"
+    "map": "cpp",
+    "iostream": "cpp",
+    "vector": "cpp"
   }
 }
