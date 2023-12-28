@@ -1,31 +1,35 @@
 {
-	"version": "2.0.0",
-	"runner": "terminal",
-	"tasks": [
-		{ // c++ 컴파일
-			"label": "g++ build",
-			"type": "shell",
-			"command": "g++",
-			"args": [
-				"-O2",
-				"-std=c++17",
-				"${file}",
-				"-o",
-				"${workspaceFolder}/build/${fileBasenameNoExtension}"
-			],
-			"problemMatcher": ["$gcc"],
-			"group": {
-				"kind": "build",
-				"isDefault": true,
-			}
-		},
-		{ // 실행
-			"label": "execute",
-			"command": "${workspaceFolder}/build/${fileBasenameNoExtension}",
-			"group": {
-				"kind": "test",
-				"isDefault": true,
-			}
-		}
-	]
+  "version": "2.0.0",
+  "runner": "terminal",
+  "tasks": [
+    {
+      "label": "g++ build",
+      "command": "g++",
+      "args": [
+        "-O2",
+        "-std=c++17",
+        "${file}",
+        "-o",
+        "build/${fileBasenameNoExtension}",
+        "-include",
+        "/Library/Developer/CommandLineTools/usr/include/bits/stdc++.h"
+      ],
+      "problemMatcher": ["$gcc"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "execute",
+      "command": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    }
+  ]
 }

@@ -22,6 +22,8 @@ using vpll = vector<pll>;
 #define sz(v) ((int)(v).size())
 #define ints(args...) int args; readln(args);
 #define lls(args...) ll args; readln(args);
+#define vints(v, n) vint v(n); for(int& i:v) cin>>i;
+#define vlls(v, n) vll v(n); for(ll& i:v) cin>>i;
 
 template<typename... Args>
 void readln(Args&... args) { ((cin >> args), ...); }
@@ -30,10 +32,5 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  ints(n);
-  vint v(n);
-  for(int& i:v) cin>>i;
-  sort(all(v));
-
-  
+  cout<<"HELLOSS";
 }

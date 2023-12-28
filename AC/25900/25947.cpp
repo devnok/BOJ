@@ -22,43 +22,31 @@ using vpll = vector<pll>;
 #define sz(v) ((int)(v).size())
 #define ints(args...) int args; readln(args);
 #define lls(args...) ll args; readln(args);
+#define vints(v, n) vint v(n); for(int& i:v) cin>>i;
+#define vlls(v, n) vll v(n); for(ll& i:v) cin>>i;
 
 template<typename... Args>
 void readln(Args&... args) { ((cin >> args), ...); }
 template<typename... Args>
 void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
-const int MAXN = 100010;
-int v[MAXN], s[MAXN];
-vint adj[MAXN];
-void dfs(int x){
-  if(s[x]) return;
-  int c=0;
-  v[x]=1;
-  for(int i:adj[x]){
-    if(!v[i]){
-      dfs(i);
-      c++;
-    }
-  }
-  v[x]=0;
-  if(!c){
-    puts("yes");
-    exit(0);
-  }
-}
+ll ps[100010], v[100010];
+
 int main(void){
-  cin.tie(0)->sync_with_stdio(0);
-  ints(n,m);
-  for(int i=0;i<m;i++){
-    ints(u,v);
-    adj[u].push_back(v);
+  lls(n,b,a);
+  a=min(a,n);
+  for(int i=1;i<=n;i++) cin>>v[i];
+  sort(v, v+n+1);
+  for(int i=1;i<=n;i++) ps[i]=ps[i-1]+v[i];
+  int l = upper_bound(ps, ps+n+1, b) - ps;
+  int r = l; // [l, r)
+  ll c = b - ps[l-1];
+
+  while(r-l < a) {
+    if(l<0 || r>n) break;
+    // printf("%lld %lld %lld\n", v[l], v[r], c);
+    if(c >= v[r]>>1) c-=v[r++]>>1;
+    else c+=v[--l]>>1;
   }
-  ints(sn);
-  while(sn--){
-    ints(p);
-    s[p]=1;
-  }
-  dfs(1);
-  puts("Yes");
+  cout<<r-1;
 }

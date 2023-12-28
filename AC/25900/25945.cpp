@@ -30,5 +30,13 @@ void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  
+  int n, m=0; cin>>n;
+  vint a(n);
+  for(int& i:a) cin>>i, m+=i;
+  int l=m/n, h=m/n+(m%n?1:0), b=0,c=0;
+  for(int i:a){
+    if(i<l) b+=l-i;
+    if(i>h) c+=i-h;
+  }
+  cout<<max(b,c);
 }

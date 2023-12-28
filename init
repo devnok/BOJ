@@ -1,14 +1,5 @@
 #!/bin/bash
 v=$1
-r=${v//[0-9]/}
-if [ -z "$r" ]; then
-  let f=v/100*100
-  f=$(printf %05d $f)
-else
-  f=others
-fi
-echo $f
-mkdir -p $f
-cp template.cpp "$f/$v.cpp"
-chmod +x ./config
-./config $f/$v
+s="solving"
+mkdir -p $s
+cp lib/template.cpp "$s/$v.cpp"
