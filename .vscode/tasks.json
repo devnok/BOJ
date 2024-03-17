@@ -10,9 +10,7 @@
         "-std=c++17",
         "${file}",
         "-o",
-        "build/${fileBasenameNoExtension}",
-        "-include",
-        "/Library/Developer/CommandLineTools/usr/include/bits/stdc++.h"
+        "build/${fileBasenameNoExtension}"
       ],
       "problemMatcher": ["$gcc"],
       "options": {

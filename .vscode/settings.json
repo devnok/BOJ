@@ -101,5 +101,6 @@
     "random": "cpp",
     "ranges": "cpp",
     "algorithm": "cpp"
-  }
+  },
+  "editor.formatOnSave": false
 }

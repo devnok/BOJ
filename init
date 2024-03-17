@@ -2,4 +2,4 @@
 v=$1
 s="solving"
 mkdir -p $s
-cp lib/template.cpp "$s/$v.cpp"
+cp lib/template_simple.cpp "$s/$v.cpp"

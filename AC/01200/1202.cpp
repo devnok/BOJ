@@ -20,17 +20,37 @@ using vpll = vector<pll>;
 #define y second
 #define all(v) (v).begin(), (v).end()
 #define sz(v) ((int)(v).size())
-#define ints(args...) int args; readln(args);
-#define lls(args...) ll args; readln(args);
-#define vints(v, n) vint v(n); for(int& i:v) cin>>i;
-#define vlls(v, n) vll v(n); for(ll& i:v) cin>>i;
-
-template<typename... Args>
-void readln(Args&... args) { ((cin >> args), ...); }
-template<typename... Args>
-void writeln(Args... args) { ((cout << args << " "), ...); cout << '\n'; }
 
 int main(void){
   cin.tie(0)->sync_with_stdio(0);
-  cout<<"HELLOSS";
+  int n,k;
+  cin>>n>>k;
+
+  vint c(k);
+  vpii a(n); // M, V
+  for(auto& [x,y]:a) cin>>x>>y;
+  for(auto& i:c) cin>>i;
+  
+  sort(all(a));
+  sort(all(c));
+
+  priority_queue<int> pq;
+
+  ll j=0, ans=0;
+  for(int i=0;i<k;i++) {
+    while(j<n && a[j].x <= c[i]){
+      pq.push(a[j++].y);
+    }
+    if(!pq.empty()){
+      ans += pq.top();
+      pq.pop();
+    }
+  }
+  cout<<ans;
 }
+/*
+작은거부터?
+담을수있는지 없는지 알아야됨
+담을수있는 최대 용량이 있음.
+
+*/
